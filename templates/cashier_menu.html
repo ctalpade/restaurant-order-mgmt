@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .dashboard-container {
+            display: flex;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .big-button {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 280px;
+            height: 280px;
+            background-color: #ffffff;
+            color: #1c1e21;
+            text-decoration: none;
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+        }
+
+        /* "Place Orders" - Primary Action */
+        .place-order {
+            border-bottom: 8px solid #007bff;
+        }
+
+        /* "View Orders" - Secondary Action */
+        .view-order {
+            border-bottom: 8px solid #6c757d;
+        }
+
+        .big-button:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .big-button:active {
+            transform: translateY(-2px);
+        }
+
+        .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .label {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 600px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .big-button {
+                width: 240px;
+                height: 200px;
+            }
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#btnViewPlaceOrderScreen").click(function () {
+                console.log('btnViewPlaceOrderScreen clicked')
+            });
+
+        });
+    </script>
+</head>
+
+{% extends 'base.html' %}
+
+{% block title %}Cashier Menu Page{% endblock %}
+
+{% block content %}
+
+{% if session.username is defined %}
+<div class="dashboard-container">
+    <!-- Button 1: Place Orders -->
+    <a href="/ordering_menu" class="big-button place-order">
+        <span class="icon">🛒</span>
+        <span class="label" id="btnViewPlaceOrderScreen">Place Orders</span>
+    </a>
+
+    <!-- Button 2: View Orders -->
+    <a href="/view_orders" class="big-button view-order">
+        <span class="icon">📋</span>
+        <span class="label">View Orders</span>
+    </a>
+</div>
+{% else %}
+<div>Please login <a href="/login">LOGIN</a></div>
+{% endif %}
+
+{% endblock %}
+
+</html>

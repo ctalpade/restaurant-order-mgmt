@@ -1,0 +1,52 @@
+<style>
+    .app-header {
+        height: 30px;
+        display: flex;
+        align-items: center;
+        padding: 0 24px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        /* Forces the div to stay exactly 150px tall */
+        position: fixed;
+        top: 10px;
+    }
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        /* Space between logo and text */
+        text-decoration: none;
+        color: #2c3e50;
+    }
+
+    .logo-icon {
+        width: 36px;
+        height: 36px;
+        background-color: #ff6b6b;
+        /* Accent background color */
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+    }
+
+    .brand-name {
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+    }
+</style>
+
+<header class="app-header">
+    <a href="#" class="logo-container">
+        <!-- Inline SVG Sample Logo -->
+        <div class="logo-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+        </div>
+        <span class="brand-name">BistroApp</span>
+    </a>
+</header>

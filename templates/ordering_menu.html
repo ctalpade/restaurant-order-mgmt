@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collapsible Menu POS</title>
+    <link rel="stylesheet" href="static/css/ordering_menu.css">
+    <style>
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script>
+        // Toggle category collapse/expand
+        function toggleCategory(header) {
+            const block = header.parentElement;
+            block.classList.toggle('active');
+        }
+
+        let cart = {};
+        const TAX_RATE = 0.13;
+
+        function addToOrder(name, price) {
+            if (cart[name]) { cart[name].qty += 1; }
+            else { cart[name] = { price: price, qty: 1 }; }
+            updateUI();
+        }
+
+        function changeQty(name, amount) {
+            cart[name].qty += amount;
+            if (cart[name].qty <= 0) delete cart[name];
+            updateUI();
+        }
+
+        function updateUI() {
+            const list = document.getElementById('order-items');
+            list.innerHTML = '';
+            let subtotal = 0;
+
+            Object.keys(cart).forEach(name => {
+                const item = cart[name];
+                subtotal += (item.price * item.qty);
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <div class="cart-item-row"><strong>${name}</strong><span>$${(item.price * item.qty).toFixed(2)}</span></div>
+                    <div class="cart-item-row">
+                        <div class="qty-controls">
+                            <button class="btn" onclick="changeQty('${name}', -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="btn" onclick="changeQty('${name}', 1)">+</button>
+                        </div>
+                        <button class="remove-btn" onclick="changeQty('${name}', -${item.qty})">Remove</button>
+                    </div>`;
+                list.appendChild(div);
+            });
+
+            const tax = subtotal * TAX_RATE;
+            document.getElementById('subtotal').innerText = `$${subtotal.toFixed(2)}`;
+            document.getElementById('tax').innerText = `$${tax.toFixed(2)}`;
+            document.getElementById('total').innerText = `$${(subtotal + tax).toFixed(2)}`;
+            if (Object.keys(cart).length === 0) list.innerHTML = '<p style="text-align:center; color:#999">Empty Order</p>';
+        }
+
+        function checkout() {
+            if (Object.keys(cart).length === 0) return alert("Empty!");
+            console.log('order placed ', cart)
+            $.ajax({
+                url: 'placeOrder',
+                type: 'POST',
+                // 1. Convert object to JSON string
+                data: JSON.stringify({ 'cart': cart }),
+                // 2. Set the correct content type
+                contentType: 'application/json; charset=utf-8',
+                // 3. Expected response format
+                dataType: 'json',
+                success: function (response) {
+                    cart = {};
+                    updateUI();
+                    console.log("Order saved:", response);
+                    if (response.redirect_url) {
+                        window.location.href = response.redirect_url;
+                    }
+                },
+                error: function (error) {
+                    console.error("Submission error:", error);
+                }
+            });
+        }
+    </script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            let menu = getMenu()
+            let menuOpti = processMenu(menu)
+            displayMenu(menuOpti)
+        });
+
+        function getMenu() {
+            // data will come from backend/endpoint
+            menu0 = [
+                { "category": "Appetizers", "itemname": "Fries Small", "price": "$2" },
+                { "category": "Appetizers", "itemname": "Fries Medium", "price": "$3" },
+                { "category": "Appetizers", "itemname": "Fries Large", "price": "$4" },
+                { "category": "Appetizers", "itemname": "Hot Dog", "price": "$3" },
+                { "category": "Mains", "itemname": "Chicken Burger", "price": "$8" },
+                { "category": "Mains", "itemname": "Veggie Burger", "price": "$6" },
+                { "category": "Mains", "itemname": "Veggie Wrap", "price": "$7" },
+                { "category": "Mains", "itemname": "Tandoori Chicken", "price": "$25" },
+                { "category": "Desserts", "itemname": "Ice Cream", "price": "$5" },
+                { "category": "Desserts", "itemname": "Soda", "price": "$2" },
+                { "category": "Desserts", "itemname": "Churros", "price": "$7" },
+                { "category": "Desserts", "itemname": "Cake", "price": "$8" },
+
+            ]
+            return menu0;
+        }
+
+        function processMenu(menu) {
+            let menuOpti = {}
+            menu.forEach(m => {
+                console.log('****** menu item ', m)
+
+                category = m["category"]
+                itemname = m['itemname']
+                price = m['price']
+
+                if (!(category in menuOpti)) {
+                    menuOpti[category] = {}
+                    menuOpti[category]["items"] = []
+                }
+                itemList = menuOpti[category]["items"]
+                itemList.push({ "itemname": itemname, "price": price })
+
+            })
+            console.log('menuOpti ', menuOpti)
+            return menuOpti
+        }
+
+
+        function displayMenu(menu) {
+
+            let htmlBlock = ""
+            Object.entries(menu).forEach((key, index) => {
+                console.log('displayMenu1 ', key)
+                console.log('displayMenu2 ', index)
+                let category = key[0]
+                let items = key[1]['items']
+                console.log('items A ', items)
+                htmlBlock += `
+            <div class="category-block">
+            <div class="category-header" onclick="toggleCategory(this)">
+                `+ category + `<span>▼</span>
+            </div>
+            `
+                htmlBlock += `
+            <!-- TODO add the table to display menu-->
+            <div class="category-content">
+                <table class="chunky-table">
+                    `
+                Object.values(items).forEach((item, idx) => {
+                    console.log('item ', item)
+                    let itemname = item['itemname']
+                    let price = item['price']
+                    htmlBlock += `<tr>
+                        <td>`+ itemname + `</td>
+                        <td>`+ price + `</td>
+                        <td><button class="btn add-btn" onclick="addToOrder('`+ itemname + `', ` + +(price.slice(1)) + `)">Add</button></td>
+                    </tr>`
+                })
+                htmlBlock += `
+                </table>
+            </div>
+            </div>
+        `
+
+
+            })
+            console.log('htmlBlock ', htmlBlock)
+            $('#menuContent').html(htmlBlock)
+            console.log('htmlBlock Done')
+
+        }
+
+    </script>
+
+</head>
+
+{% extends 'base.html' %}
+
+{% block title %}Cashier Menu Page{% endblock %}
+
+{% block content %}
+
+<div class="ordering-content">
+    <div class="menu-container">
+        <br>
+        <a href="/cashier_menu" class="big-button back-cashier-menu">
+            <span class="label">Back to Cashier Menu</span>
+        </a>
+
+        <h1>Restaurant Menu</h1>
+
+        <div id="menuContent">Test</div>
+
+
+    </div>
+
+    <!-- Right Side: Order Panel (Functionality identical to previous) -->
+    <div class="order-panel">
+        <div class="order-header">
+            <h2>Order</h2>
+        </div>
+        <div id="order-items" class="order-items"></div>
+        <div class="order-footer">
+            <div class="calc-row"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
+            <div class="calc-row"><span>Tax (13%)</span><span id="tax">$0.00</span></div>
+            <div class="total-row"><span>Total</span><span id="total">$0.00</span></div>
+            <button class="btn"
+                style="width:100%; padding:15px; background:var(--success); color:white; margin-top:10px"
+                onclick="checkout()">Place Order</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+</html>

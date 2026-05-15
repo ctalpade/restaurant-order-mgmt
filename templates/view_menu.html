@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Menu</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fcfcfc;
+            color: #333;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .menu-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #1a1a1a;
+        }
+
+        .category-section {
+            margin-bottom: 50px;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #eee;
+        }
+
+        .item-details {
+            padding: 20px;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .item-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 0;
+            color: #1a1a1a;
+        }
+
+        .item-price {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #28a745;
+            background: #e8f5e9;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .item-description {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.5;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="menu-container">
+        <h1>Our Menu</h1>
+
+        <!-- Appetizers Section -->
+        <section class="category-section">
+            <h2 class="category-title">Appetizers</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="https://unsplash.com" alt="Garlic Bread" class="item-image">
+                    <div class="item-details">
+                        <div class="item-header">
+                            <h3 class="item-name">Bruschetta</h3>
+                            <span class="item-price">$12.50</span>
+                        </div>
+                        <p class="item-description">Toasted sourdough topped with fresh tomatoes, basil, and aged
+                            balsamic glaze.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mains Section -->
+        <section class="category-section">
+            <h2 class="category-title">Mains</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="https://unsplash.com" alt="Grilled Salmon" class="item-image">
+                    <div class="item-details">
+                        <div class="item-header">
+                            <h3 class="item-name">Grilled Salmon</h3>
+                            <span class="item-price">$24.99</span>
+                        </div>
+                        <p class="item-description">Atlantic salmon with a lemon-herb butter sauce and roasted
+                            asparagus.</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://unsplash.com" alt="Pizza" class="item-image">
+                    <div class="item-details">
+                        <div class="item-header">
+                            <h3 class="item-name">Classic Margherita</h3>
+                            <span class="item-price">$18.00</span>
+                        </div>
+                        <p class="item-description">Buffalo mozzarella, fresh basil, and our house-made San Marzano
+                            tomato sauce.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Desserts Section -->
+        <section class="category-section">
+            <h2 class="category-title">Desserts</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="https://unsplash.com" alt="Cake" class="item-image">
+                    <div class="item-details">
+                        <div class="item-header">
+                            <h3 class="item-name">Chocolate Lava Cake</h3>
+                            <span class="item-price">$9.50</span>
+                        </div>
+                        <p class="item-description">Warm chocolate cake with a molten center, served with vanilla bean
+                            gelato.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+
+</html>

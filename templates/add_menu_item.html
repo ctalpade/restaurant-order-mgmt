@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Menu Item with Image</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #1c1e21;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4b4f56;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dddfe2;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 15px;
+            background-color: #fcfcfc;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Price styling */
+        .price-wrapper {
+            position: relative;
+        }
+        .price-wrapper::before {
+            content: '$';
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-weight: bold;
+        }
+        .price-input {
+            padding-left: 28px !important;
+        }
+
+        /* File upload styling */
+        .file-input-label {
+            display: block;
+            border: 2px dashed #cbd5e0;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .file-input-label:hover {
+            border-color: #007bff;
+            background-color: #f8fbff;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Add Menu Item</h2>
+        <!-- enctype is required for file uploads to work -->
+        <form action="/add-menu-endpoint" method="POST" enctype="multipart/form-data">
+            
+            <div class="form-group">
+                <label for="category">Item Category</label>
+                <select id="category" name="category" required>
+                    <option value="" disabled selected>Choose a category...</option>
+                    <option value="Appetizers">Appetizers</option>
+                    <option value="Mains">Mains</option>
+                    <option value="Desserts">Desserts</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="item_name">Item Name</label>
+                <input type="text" id="item_name" name="item_name" required placeholder="e.g. Truffle Fries">
+            </div>
+
+            <div class="form-group">
+                <label for="price">Item Price</label>
+                <div class="price-wrapper">
+                    <input type="number" id="price" name="price" class="price-input" step="0.01" min="0" required placeholder="0.00">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="item_image">Item Image</label>
+                <input type="file" id="item_image" name="item_image" accept="image/*">
+                <small style="color: #888; display: block; margin-top: 5px;">Recommended: 800x600px JPG or PNG</small>
+            </div>
+
+            <button type="submit" class="btn-submit">Add to Menu</button>
+        </form>
+    </div>
+
+</body>
+</html>

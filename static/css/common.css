@@ -1,0 +1,22 @@
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.fixed-height-div {
+    height: 50px; /* Forces the div to stay exactly 150px tall */
+    position: fixed;
+    top: 50px;
+}
+
+
+.fixed-height-div-bottom {
+    position: fixed;
+    bottom: 50px;
+}

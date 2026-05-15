@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collapsible Menu POS</title>
+    <link rel="stylesheet" href="static/css/view_orders.css">
+    <style>
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            getOrders();
+        });
+
+        function getOrders() {
+            $.get('/getOrders').done(function (orders) {
+                // Executes on success
+                console.log("Success:", orders);
+                let htmlBlock = ""
+                $.each(orders, function (index, order) {
+
+                    let ordernum = order['ordernum']
+                    let orderitems = order['items']
+
+                    htmlBlock += `<div class="cell left">` + ordernum + `</div>`
+                    $.each(orderitems, function (itemname, itemdetails) {
+                        htmlBlock += `<div class="row">
+                <div class="cell id"></div>
+                <div class="cell grow item">`+ itemname + `</div>
+                <div class="cell qty">`+ itemdetails.qty + `</div>
+                <div class="cell"><span class="status status-process">`+ (itemdetails.status ?? 'NEW') + `</span></div>
+                <div class="cell center"><button class="btn">View</button></div>
+            </div>`
+
+                    });
+
+                });
+
+                $('.orders-list').append(htmlBlock)
+
+            })
+        }
+
+
+    </script>
+</head>
+
+<body>
+
+    <a href="/cashier_menu" class="big-button back-cashier-menu">
+        <span class="label">Back to Cashier Menu</span>
+    </a>
+
+    <div class="dashboard-wrapper">
+        <header class="dashboard-header">
+            <h1>Active Orders</h1>
+        </header>
+
+        <div class="orders-list">
+            <!-- Header Row -->
+            <div class="row header">
+                <div class="cell">Order #</div>
+                <div class="cell grow">Food Item</div>
+                <div class="cell">Quantity</div>
+                <div class="cell">Status</div>
+                <div class="cell center">Action</div>
+            </div>
+
+
+        </div>
+    </div>
+
+</body>
+
+</html>

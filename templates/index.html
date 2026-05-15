@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Court Booking Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    /*
+    body {
+      background-image: url("{{ url_for('static', filename='images/badminton-court.jpg') }}");
+      background-size: cover;
+      background-position: center;
+    }
+*/
+    .court-table-container {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background-color: #fff;
+      /* Background is required to hide scrolling rows underneath */
+      z-index: 1;
+      /* Keeps header above the body content */
+    }
+
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-family: sans-serif;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+      width: 200px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    
+
+    td.freeClass {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+
+    td.busyClass {
+      background-color: #cce5ff;
+
+      color: #004085;
+
+    }
+
+    td:hover {
+      background-color: #ffff99;
+      /* Light yellow highlight */
+    }
+
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+  <script src="static/script.js"></script>
+
+</head>
+
+<body style="background-color: lightgrey;">
+
+  <h2>Court Booking Portal</h2>
+  <p id="status"></p>
+
+  <h4>Welcome to court booking</h4>
+  <label for="playDateInp">Select the Date:</label>
+  <input type="date" id="playDateInp" name="playDate" value="{{currDate}}" min="{{minDate}}" max="{{maxDate}}">
+
+  <button id="btnCheckAvailability">Check Availability</button>
+
+  <br><br>
+
+  <h4>Book Court</h4>
+
+  <label for="bookDateInp">Select the Date:</label>
+  <input type="date" id="bookDateInp" name="playDate" value="{{currDate}}" min="{{minDate}}" max="{{maxDate}}">
+
+  <label for="courts">Court:</label>
+  <select name="courts" id="courts">
+    {%for crt in courts %}
+    <option>{{crt}}</option>
+    {% endfor %}
+  </select>
+
+  <label for="timeSlot">TimeSlot:</label>
+  <select name="timeSlot" id="timeSlot">
+    {%for ts in timeSlots %}
+    <option>{{ts}}</option>
+    {% endfor %}
+  </select>
+
+  <input type="text" id="borrowerName" placeholder="Enter BorrowerName...">
+  <button id="btnBookCourt">Book Court</button>
+  <p id="status"></p>
+  <h5>Court Status</h5>
+  <div class="court-table-container">
+    <table id="courtTable" border="1">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Court</th>
+          {%for ts in timeSlots %}
+          <th>{{ts}}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+  <hr>
+  <br>
+  <i>Developed by : Chaitanya Talpade</i>
+</body>
+
+</html>

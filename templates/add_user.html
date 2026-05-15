@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New User</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #1c1e21;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #4b4f56;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        select {
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #1877f2;
+            box-shadow: 0 0 0 2px #e7f3ff;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: #42b72a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #36a420;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+        <h2>Add New User</h2>
+        <form action="/add-user-endpoint" method="POST">
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="e.g. jsmith">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Initial Password</label>
+                <input type="password" id="password" name="password" required placeholder="Create a secure password">
+            </div>
+
+            <div class="form-group">
+                <label for="role">User Role</label>
+                <select id="role" name="role" required>
+                    <option value="" disabled selected>Select a role...</option>
+                    <option value="Cashier">Cashier</option>
+                    <option value="KitchenStaff">Kitchen Staff</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-submit">Create User</button>
+        </form>
+    </div>
+
+</body>
+
+</html>

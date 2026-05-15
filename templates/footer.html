@@ -1,0 +1,43 @@
+<script>
+    $(document).ready(function () {
+        $("#signout").click(function () {
+            console.log("Signout clicked " + $("#username").val())
+            logout()
+        });
+    });
+
+
+    function logout() {
+        console.log('logout ', $("#username").val())
+        $.ajax({
+            url: 'logout',
+            type: 'POST',
+            // 1. Convert object to JSON string
+            data: JSON.stringify({ 'username': $("#username").val(), 'sessionid': $("#sessionid").val() }),
+            // 2. Set the correct content type
+            contentType: 'application/json; charset=utf-8',
+            // 3. Expected response format
+            dataType: 'json',
+            success: function (response) {
+                console.log("logout done :", response);
+                if (response.redirect_url) {
+                    window.location.href = response.redirect_url;
+                }
+            },
+            error: function (error) {
+                console.error("Submission error:", error);
+            }
+        });
+    }
+
+</script>
+
+<div class="fixed-height-div-bottom">
+    {% if session.username is defined %}
+    <input type="hidden" id="username" value="{{session.username}}" />
+    <input type="hidden" id="sessionid" value="{{session.sessionid}}" />
+    <p><button id="signout">Sign Out</button></p>
+    {% else %}
+    <p></p>
+    {% endif %}
+</div>
