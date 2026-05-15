@@ -27,6 +27,7 @@ def generate_unique_id():
 @app.route('/')
 @app.route('/<page>')
 def index(page = 'login'):
+    session.pop('status',None)
     return render_template(page+'.html',session=session)
 
 @app.route('/login',methods=['GET','POST'])
